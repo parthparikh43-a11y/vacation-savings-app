@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17324d">
+<title>Vacation Savings</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--navy:#17324d;--teal:#1f7a78;--bg:#f3f6f8;--muted:#667085;--line:#e3e9ee;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172b3a}
+header{background:var(--navy);color:white;padding:22px 18px 20px;border-radius:0 0 24px 24px}
+h1{font-size:23px;margin:2px 0 6px}.eyebrow{font-size:11px;letter-spacing:1.2px;color:#c4d9e8;font-weight:700}
+.sub{font-size:13px;color:#d8e6ef}.hero{margin-top:18px;padding:17px;border-radius:16px;background:#294a63}
+.hero small,.metric small{display:block;color:#c8dbe8;font-size:12px}.big{font-size:31px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.metric{background:#294a63;padding:13px;border-radius:13px}.metric strong{display:block;color:#fff;font-size:19px;margin-top:5px}
+main{max-width:620px;margin:auto;padding:16px 14px 40px}.card{background:white;border-radius:17px;padding:16px;margin:13px 0;box-shadow:0 2px 10px #17324d0a}
+h2{font-size:17px;margin:0 0 14px}.field{margin:12px 0}label{display:block;font-size:13px;font-weight:650;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid #d6e0e7;border-radius:10px;padding:12px;font:inherit;font-size:16px;background:#fff;color:#172b3a}
+textarea{min-height:68px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{border:0;border-radius:11px;padding:13px 15px;font-size:15px;font-weight:700;cursor:pointer}
+.primary{width:100%;background:var(--teal);color:white}.secondary{background:#eaf1f5;color:var(--navy)}.danger{background:#fff0f0;color:#a12626}
+.preview{background:#eaf2f5;border-radius:12px;padding:12px;margin:14px 0}.preview small{color:#526b7a}.preview strong{display:block;font-size:22px;color:var(--navy);margin-top:3px}
+.progress{height:11px;background:#e7edf1;border-radius:20px;overflow:hidden;margin:10px 0}.bar{height:100%;background:var(--teal);width:0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:12px}
+.entry{border-top:1px solid var(--line);padding:13px 0}.entry:first-child{border-top:0}.entry strong{font-size:14px}.amount{font-weight:800;color:var(--teal);white-space:nowrap}.negative{color:#b42318}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{font-size:12px;padding:9px 11px}
+.empty{text-align:center;color:var(--muted);padding:20px 8px;font-size:13px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
+@media(min-width:560px){header{padding-left:max(18px,calc((100% - 590px)/2));padding-right:max(18px,calc((100% - 590px)/2))}}
+</style>
+</head>
+<body>
+<header>
+ <div class="eyebrow">YOUR PERSONAL MONEY HABIT TRACKER</div>
+ <h1>Vacation Savings ✈️</h1>
+ <div class="sub">Small choices today. A better April 2027 trip.</div>
+ <div class="hero"><small>NET SAVINGS SO FAR</small><div class="big" id="net">0.000 OMR</div><div class="sub" id="count">0 log entries</div></div>
+ <div class="metrics">
+  <div class="metric"><small>AVOIDED SPENDING</small><strong id="avoidedTotal">0.000</strong></div>
+  <div class="metric"><small>UNNECESSARY SPENDING</small><strong id="spentTotal">0.000</strong></div>
+ </div>
+</header>
+<main>
+ <section class="card">
+  <h2>Log today's choices</h2>
+  <form id="entryForm">
+   <div class="field"><label for="date">Date</label><input id="date" type="date" required></div>
+   <div class="field"><label for="item">What were you tempted to buy?</label><input id="item" maxlength="100" placeholder="e.g. Late-night burger on Talabat"></div>
+   <div class="field"><label for="trigger">What triggered it?</label>
+    <select id="trigger"><option>Emotional craving</option><option>Boredom</option><option>Stress</option><option>Convenience</option><option>Impulse shopping</option><option>Other</option></select>
+   </div>
+   <div class="two">
+    <div class="field"><label for="avoided">Amount avoided (OMR)</label><input id="avoided" type="number" min="0" step="0.001" value="0"></div>
+    <div class="field"><label for="spent">Actually spent unnecessarily (OMR)</label><input id="spent" type="number" min="0" step="0.001" value="0"></div>
+   </div>
+   <div class="field"><label for="notes">Notes (optional)</label><textarea id="notes" maxlength="300" placeholder="What did you do instead?"></textarea></div>
+   <div class="preview"><small>NET SAVINGS FOR THIS ENTRY</small><strong id="preview">0.000 OMR</strong></div>
+   <button class="primary" type="submit">＋ Save daily entry</button>
+  </form>
+ </section>
+ <section class="card">
+  <h2>April 2027 vacation goal</h2>
+  <div class="field"><label for="goal">Savings target (OMR) — optional</label><input id="goal" type="number" min="0" step="0.001" placeholder="Set your target when ready"></div>
+  <div class="row"><strong id="goalProgress">Set a target to see progress</strong><span class="muted" id="percent"></span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="muted">Progress is based on net savings logged in this app.</div>
+ </section>
+ <section class="card">
+  <div class="row"><h2 style="margin:0">Your savings history</h2><span class="muted" id="entryCount">0 entries</span></div>
+  <div id="history" class="empty">Your first entry will appear here.</div>
+  <div class="actions">
+   <button class="secondary" id="export">Export CSV</button>
+   <button class="secondary" id="backup">Download backup</button>
+   <button class="secondary" id="restoreBtn">Restore backup</button>
+   <input id="restoreFile" type="file" accept="application/json" hidden>
+  </div>
+ </section>
+ <footer>Your entries are stored on this device's browser. Export backups regularly, especially before changing or resetting your phone.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='vacationSavings.entries.v1', GOAL='vacationSavings.goal.v1';
+let entries=[]; try{entries=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){entries=[]}
+let goal=Number(localStorage.getItem(GOAL)||0);
+const today=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+$('date').value=today(); $('goal').value=goal||'';
+const num=id=>Math.max(0,Number($(id).value)||0);
+const fmt=n=>Number(n).toFixed(3);
+function preview(){ $('preview').textContent=fmt(num('avoided')-num('spent'))+' OMR';}
+['avoided','spent'].forEach(id=>$(id).addEventListener('input',preview));
+function save(){localStorage.setItem(KEY,JSON.stringify(entries));localStorage.setItem(GOAL,String(goal));render();}
+function render(){
+ const a=entries.reduce((s,e)=>s+e.avoided,0),sp=entries.reduce((s,e)=>s+e.spent,0),net=a-sp;
+ $('net').textContent=fmt(net)+' OMR';$('avoidedTotal').textContent=fmt(a);$('spentTotal').textContent=fmt(sp);
+ $('count').textContent=entries.length+' log entries';$('entryCount').textContent=entries.length+' entries';
+ if(goal>0){const p=Math.max(0,Math.min(100,net/goal*100));$('goalProgress').textContent=fmt(net)+' / '+fmt(goal)+' OMR';$('percent').textContent=p.toFixed(1)+'%';$('bar').style.width=p+'%';}
+ else{$('goalProgress').textContent='Set a target to see progress';$('percent').textContent='';$('bar').style.width='0%';}
+ const h=$('history');h.innerHTML='';
+ if(!entries.length){h.className='empty';h.textContent='Your first entry will appear here.';return;}
+ h.className='';
+ [...entries].sort((x,y)=>y.date.localeCompare(x.date)||y.id-x.id).forEach(e=>{
+  const div=document.createElement('div');div.className='entry';
+  const top=document.createElement('div');top.className='row';
+  const name=document.createElement('strong');name.textContent=e.item||'Daily spending check-in';
+  const amt=document.createElement('span');amt.className='amount'+(e.avoided-e.spent<0?' negative':'');amt.textContent=fmt(e.avoided-e.spent)+' OMR';
+  top.append(name,amt);div.append(top);
+  const meta=document.createElement('div');meta.className='muted';meta.textContent=e.date+' · '+e.trigger+' · Avoided '+fmt(e.avoided)+' · Spent '+fmt(e.spent);div.append(meta);
+  if(e.notes){const n=document.createElement('div');n.className='muted';n.style.marginTop='5px';n.textContent=e.notes;div.append(n);}
+  const actions=document.createElement('div');actions.className='actions';
+  const del=document.createElement('button');del.className='danger';del.textContent='Delete entry';del.addEventListener('click',()=>{if(confirm('Delete this entry?')){entries=entries.filter(x=>x.id!==e.id);save();}});
+  actions.append(del);div.append(actions);h.append(div);
+ });
+}
+$('entryForm').addEventListener('submit',e=>{
+ e.preventDefault();const avoided=num('avoided'),spent=num('spent'),item=$('item').value.trim();
+ if(!item && avoided===0 && spent===0){alert('Add an item or an amount before saving.');return;}
+ entries.push({id:Date.now()+Math.random(),date:$('date').value,item,trigger:$('trigger').value,avoided,spent,notes:$('notes').value.trim()});
+ save();$('item').value='';$('avoided').value='0';$('spent').value='0';$('notes').value='';preview();
+});
+$('goal').addEventListener('change',()=>{goal=Math.max(0,Number($('goal').value)||0);save();});
+function download(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
+$('export').addEventListener('click',()=>{
+ const rows=[['Date','Item','Trigger','Avoided OMR','Spent OMR','Net OMR','Notes'],...entries.map(e=>[e.date,e.item,e.trigger,e.avoided,e.spent,e.avoided-e.spent,e.notes])];
+ const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\n');
+ download('vacation-savings-log.csv',csv,'text/csv');
+});
+$('backup').addEventListener('click',()=>download('vacation-savings-backup.json',JSON.stringify({entries,goal,exportedAt:new Date().toISOString()},null,2),'application/json'));
+$('restoreBtn').addEventListener('click',()=>$('restoreFile').click());
+$('restoreFile').addEventListener('change',async e=>{
+ const f=e.target.files[0];if(!f)return;
+ try{const data=JSON.parse(await f.text());if(!Array.isArray(data.entries))throw Error('Invalid backup');if(confirm('Restore this backup? It will replace the current entries.')){entries=data.entries;goal=Number(data.goal)||0;$('goal').value=goal||'';save();}}
+ catch(err){alert('Could not read that backup file.');}e.target.value='';
+});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
